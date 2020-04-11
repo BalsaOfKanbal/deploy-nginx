@@ -30,11 +30,19 @@ pipeline {
                 """
             }
         }
-        stage("idempotence") {
+        stage("converge") {
             steps {
                 sh """
                     source ./env/bin/activate 
-                    molecule idempotence
+                    molecule converge
+                """
+            }
+        }
+        stage("verify") {
+            steps {
+                sh """
+                    source ./env/bin/activate 
+                    molecule verify
                 """
             }
         }
