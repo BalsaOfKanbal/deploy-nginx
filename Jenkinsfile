@@ -6,8 +6,8 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh """
-                    sudo pip3 install molecule
-                    sudo pip3 install docker
+                    pip3 install molecule
+                    pip3 install docker
                 """
             }
         }
