@@ -6,14 +6,18 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh """
-                    sudo pip3 install molecule
-                    sudo pip3 install docker
+                python3 -m venv env
+                source ./env/bin/activate 
+                python -m pip3 install google-assistant-sdk[samples]
+                sudo pip3 install molecule
+                sudo pip3 install docker
                 """
             }
         }
         stage('lint') {
             steps {
                 sh """
+                    source ./env/bin/activate 
                     molecule lint
                 """
             }
@@ -21,6 +25,7 @@ pipeline {
         stage('create') {
             steps {
                 sh """
+                    source ./env/bin/activate 
                     molecule create
                 """
             }
@@ -28,6 +33,7 @@ pipeline {
         stage("idempotence") {
             steps {
                 sh """
+                    source ./env/bin/activate 
                     molecule idempotence
                 """
             }
@@ -35,6 +41,7 @@ pipeline {
         stage("cleanup") {
             steps {
                 sh """
+                    source ./env/bin/activate 
                     molecule verify
                 """
             }
@@ -42,6 +49,7 @@ pipeline {
         stage("destroy") {
             steps {
                 sh """
+                    source ./env/bin/activate 
                     molecule destroy
                 """
             }
@@ -51,8 +59,7 @@ pipeline {
     post {
         always {
             sh """
-                sudo pip3 uninstall molecule -y
-                sudo pip3 uninstall docker -y
+                rm -rf env
             """
         }
     }
