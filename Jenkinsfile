@@ -6,8 +6,8 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh """
-                    sudo pip install molecule
-                    sudo pip install docker
+                    sudo pip3 install molecule
+                    sudo pip3 install docker
                 """
             }
         }
@@ -51,8 +51,8 @@ pipeline {
     post {
         always {
             sh """
-                sudo pip uninstall molecule -y
-                sudo pip uninstall docker -y
+                sudo pip3 uninstall molecule -y
+                sudo pip3 uninstall docker -y
             """
         }
     }
